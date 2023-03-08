@@ -44,6 +44,18 @@ class BirdsController < ApplicationController
     end
   end
 
+  # DELETE /birds/:id
+  def destroy
+    bird = Bird.find_by(id: params[:id])
+    if bird
+      bird.destroy
+      head :no_content # returns 204 no_content
+      # render json: {} # returns 200 ok and empty obj --> {}
+    else
+      render json: { error: "Bird not found" }, status: :not_found
+    end
+  end
+
   private
 
   def bird_params
